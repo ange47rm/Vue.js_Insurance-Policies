@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="amber darken-3" dark>
-      <v-img alt="Vuetify Logo" class="shrink mr-2" contain
+      <v-img alt="Broker Insights" class="shrink mr-2" contain
         src="./assets/broker-logo.png" transition="scale-transition" width="100" />
       <h1 class="text-right">Insurance Policies - Broker Insights</h1>
       <v-spacer></v-spacer>
