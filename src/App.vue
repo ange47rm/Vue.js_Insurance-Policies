@@ -1,18 +1,35 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <InsurancePolicyHome v-bind:client="client" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import InsurancePolicyHome from './components/InsurancePolicyHome.vue'
+import Client from './models/Client.js'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    InsurancePolicyHome
+  },
+  data() {
+    return {
+      client: new Client()
+    }
+  },
+  mounted() {
+    fetch("./achme-broker.json")
+      .then(res => res.json())
+      .then(data => {
+        this.client.name = data.client.name;
+        this.client.policies = data.client.policies;
+      });
   }
+
+
 }
 </script>
 
