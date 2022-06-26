@@ -1,8 +1,11 @@
 <template>
-  <div class="hello">
-    <h1>{{ client.name }}</h1>
-
-    <h3>{{ JSON.stringify(client.policies)}}</h3>
+  <div>
+      <v-data-table :headers="headers" :items="client.policies" item-key="customer_name" class="elevation-1" :search="search"
+        :custom-filter="filterOnlyCapsText">
+        <template v-slot:top>
+          <v-text-field v-model="search" label="Search (UPPER CASE ONLY)" class="mx-4"></v-text-field>
+        </template>
+      </v-data-table>
   </div>
 </template>
 
@@ -13,7 +16,31 @@ export default {
   name: 'InsurancePolicyHome',
   props: {
     client: Client
-  }
+  },
+  data() {
+    return {
+      search: '',
+    }
+  },
+  computed: {
+    headers() {
+      return [
+        { text: 'Customer Name', align: 'start', sortable: true, value: 'customer_name', },
+        { text: 'Customer Address', value: 'customer_address' },
+        { text: 'Premium (£)', value: 'premium' },
+        { text: 'Policy Type', value: 'policy_type' },
+        { text: 'Insurer Name', value: 'insurer_name' },
+      ]
+    },
+  },
+  methods: {
+    filterOnlyCapsText(value, search) {
+      return value != null &&
+        search != null &&
+        typeof value === 'string' &&
+        value.toString().toLocaleUpperCase().indexOf(search) !== -1
+    },
+  },
 }
 </script>
 
@@ -22,14 +49,17 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
 }
