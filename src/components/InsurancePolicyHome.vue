@@ -1,9 +1,9 @@
 <template>
   <div>
-      <v-data-table :headers="headers" :items="client.policies" item-key="customer_name" class="elevation-1" :search="search"
+      <v-data-table :headers="headers" :items="client.policies" item-key="premium" class="elevation-1" :search="search"
         :custom-filter="filterOnlyCapsText">
         <template v-slot:top>
-          <v-text-field v-model="search" label="Search (UPPER CASE ONLY)" class="mx-4"></v-text-field>
+          <v-text-field v-model="search" label="Search" class="mx-4"></v-text-field>
         </template>
       </v-data-table>
   </div>
@@ -35,10 +35,14 @@ export default {
   },
   methods: {
     filterOnlyCapsText(value, search) {
+      if (search) {
+        search = search.toLocaleLowerCase();
+      }
+
       return value != null &&
         search != null &&
         typeof value === 'string' &&
-        value.toString().toLocaleUpperCase().indexOf(search) !== -1
+        value.toString().toLocaleLowerCase().indexOf(search) !== -1
     },
   },
 }
